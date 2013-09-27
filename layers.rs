@@ -10,7 +10,7 @@
 use geom::matrix::{Matrix4, identity};
 use geom::size::Size2D;
 use geom::rect::Rect;
-use opengles::gl2::{GLuint, delete_textures};
+use opengles::gl2::GLuint;
 use std::managed::mut_ptr_eq;
 
 pub enum Format {

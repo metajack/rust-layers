@@ -7,33 +7,29 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use layers;
-use layers::{ARGB32Format, ContainerLayerKind, TextureLayerKind, Image, ImageLayerKind, RGB24Format};
-use layers::{TiledImageLayerKind};
+use layers::{ContainerLayerKind, Flip, NoFlip, TextureLayerKind};
+use layers::{VerticalFlip};
 use scene::Scene;
 
 use geom::matrix::{Matrix4, ortho};
 use geom::point::Point2D;
 use geom::size::Size2D;
 use geom::rect::Rect;
-use opengles::gl2::{ARRAY_BUFFER, COLOR_BUFFER_BIT, CLAMP_TO_EDGE, COMPILE_STATUS};
-use opengles::gl2::{FRAGMENT_SHADER, LINK_STATUS, LINEAR, NO_ERROR, RGB, RGBA, BGRA, SCISSOR_BOX};
-use opengles::gl2::{SCISSOR_TEST, STATIC_DRAW, TEXTURE_2D, TEXTURE_MAG_FILTER, TEXTURE_MIN_FILTER};
-use opengles::gl2::{TEXTURE_WRAP_S, TEXTURE_WRAP_T, TEXTURE0};
-use opengles::gl2::{TRIANGLE_STRIP, UNPACK_ALIGNMENT, UNPACK_CLIENT_STORAGE_APPLE};
-use opengles::gl2::{UNPACK_ROW_LENGTH, UNSIGNED_BYTE, UNSIGNED_INT_8_8_8_8_REV, VERTEX_SHADER, VIEWPORT};
+use opengles::gl2::{ARRAY_BUFFER, COLOR_BUFFER_BIT, COMPILE_STATUS};
+use opengles::gl2::{FRAGMENT_SHADER, LINK_STATUS, NO_ERROR, SCISSOR_BOX};
+use opengles::gl2::{SCISSOR_TEST, STATIC_DRAW, TEXTURE_2D, TEXTURE0, TRIANGLE_STRIP};
+use opengles::gl2::{VERTEX_SHADER, VIEWPORT};
 use opengles::gl2::{GLenum, GLint, GLsizei, GLuint, attach_shader, bind_buffer};
 use opengles::gl2::{bind_texture, buffer_data, create_program, clear, clear_color};
 use opengles::gl2::{compile_shader, create_shader, draw_arrays, disable, enable, is_enabled};
-use opengles::gl2::{enable_vertex_attrib_array, gen_buffers, gen_textures};
+use opengles::gl2::{enable_vertex_attrib_array, gen_buffers};
 use opengles::gl2::{get_attrib_location, get_error, get_integer_v, get_program_iv};
 use opengles::gl2::{get_shader_info_log, get_shader_iv, active_texture};
-use opengles::gl2::{get_uniform_location, link_program, pixel_store_i, scissor, shader_source};
-use opengles::gl2::{tex_image_2d, tex_parameter_i, uniform_1i, uniform_matrix_4fv, use_program};
+use opengles::gl2::{get_uniform_location, link_program, scissor, shader_source};
+use opengles::gl2::{uniform_1i, uniform_matrix_4fv, use_program};
 use opengles::gl2::{vertex_attrib_pointer_f32, viewport};
 
 use std::libc::c_int;
-use std::libc::c_uint;
 
 pub fn FRAGMENT_SHADER_SOURCE() -> ~str {
     ~"
