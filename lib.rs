@@ -7,17 +7,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#[link(name = "layers",
-       vers = "0.1")];
-#[crate_type = "lib"];
-
 extern mod std;
 
-extern mod geom;
-extern mod opengles;
+extern mod geom = "rust-geom";
+extern mod opengles = "rust-opengles";
 
 pub mod layers;
 pub mod scene;
 pub mod rendergl;
 pub mod util;
-
